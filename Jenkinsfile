@@ -9,7 +9,7 @@ pipeline{
         PUBLISH_DIR = 'publish_output'
         DEPLOY_DIR = '/var/www/myaspnetapp'  
     }
-
+ 
     stages
     {
         stage("Cekout")
