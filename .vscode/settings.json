@@ -1,0 +1,18 @@
+{
+    "dotnet.defaultSolution": "WebApp.sln",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/vs": true,
+        "**/.vscode": false
+    },
+    "search.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    }
+}
