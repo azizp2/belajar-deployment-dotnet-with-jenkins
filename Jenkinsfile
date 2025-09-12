@@ -43,7 +43,7 @@ pipeline{
             steps
             {
                 echo "Running unit test..."
-                sh "dotnet test ${TEST_PROJECT} --no-build --verbose normal"
+                sh "dotnet test ${TEST_PROJECT} --no-build --verbosity normal"
             }
         }
 
