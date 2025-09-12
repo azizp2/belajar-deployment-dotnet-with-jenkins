@@ -19,11 +19,13 @@ pipeline{
                 sh "ls -la /var/www"
             }
         }
-        stage("Cekout")
+
+        stage("Clean")
         {
             steps
             {
-                echo "Checking out source code ...."
+                echo "Cleaning up..."
+                sh "rm -rf ${PUBLISH_DIR}"
             }
         }
 
@@ -67,10 +69,7 @@ pipeline{
         {
             steps
             {
-                // echo "Deploying to ${DEPLOY_DIR}..."
-                // sh "mkdir -p ${DEPLOY_DIR}"
-                // sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}"
-                sh "mkdir -p ${DEPLOY_DIR}"
+                 sh "mkdir -p ${DEPLOY_DIR}"
                 sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
                 sh "chown -R www-data:www-data ${DEPLOY_DIR}"
             }
