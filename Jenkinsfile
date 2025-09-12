@@ -80,7 +80,6 @@ pipeline{
         always
         {
             echo "Build finished"
-            cleanWs()
         }
     }
  
