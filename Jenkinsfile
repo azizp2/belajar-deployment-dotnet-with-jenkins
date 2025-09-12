@@ -7,7 +7,7 @@ pipeline{
         WEB_PROJECT = 'MyAspNetApp/MyAspNetApp.csproj'
         TEST_PROJECT = 'MyAspNetApp.Tests/MyAspNetApp.Tests.csproj'
         PUBLISH_DIR = 'publish_output'
-        DEPLOY_DIR = '/var/www/myaspnetapp'  
+        DEPLOY_DIR = '${WORKSPACE}/deploy_output'  
     }
  
     stages
@@ -62,7 +62,7 @@ pipeline{
             {
                 echo "Deploying to ${DEPLOY_DIR}..."
                 sh "mkdir -p ${DEPLOY_DIR}"
-                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIRe}"
+                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}"
             }
         }
     }
