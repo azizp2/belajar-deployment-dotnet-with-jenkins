@@ -10,11 +10,6 @@ pipeline{
         DEPLOY_DIR = '/var/www/myaspnetapp'  
     }
 
-    tools
-    {
-        dotnet "${DOTNET_VERSION}"
-    }
-
     stages
     {
         stage("Cekout")
