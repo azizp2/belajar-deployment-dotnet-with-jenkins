@@ -7,11 +7,18 @@ pipeline{
         WEB_PROJECT = 'MyAspNetApp/MyAspNetApp.csproj'
         TEST_PROJECT = 'MyAspNetApp.Tests/MyAspNetApp.Tests.csproj'
         PUBLISH_DIR = 'publish_output'
-        DEPLOY_DIR = '${WORKSPACE}/deploy_output'  
+        // DEPLOY_DIR = '${WORKSPACE}/deploy_output'  
+        DEPLOY_DIR = '/var/www/myaspnetapp2'
     }
  
     stages
     {
+        stage("Debug Info") {
+            steps {
+                sh "whoami"
+                sh "ls -la /var/www"
+            }
+        }
         stage("Cekout")
         {
             steps
@@ -60,9 +67,12 @@ pipeline{
         {
             steps
             {
-                echo "Deploying to ${DEPLOY_DIR}..."
+                // echo "Deploying to ${DEPLOY_DIR}..."
+                // sh "mkdir -p ${DEPLOY_DIR}"
+                // sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}"
                 sh "mkdir -p ${DEPLOY_DIR}"
-                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}"
+                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
+                sh "chown -R www-data:www-data ${DEPLOY_DIR}"
             }
         }
     }
