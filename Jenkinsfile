@@ -69,9 +69,12 @@ pipeline{
         {
             steps
             {
-                 sh "mkdir -p ${DEPLOY_DIR}"
+                sh "mkdir -p ${DEPLOY_DIR}"
                 sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
                 sh "chown -R www-data:www-data ${DEPLOY_DIR}"
+
+                sh "sudo systemctl restart myaspnetapp"
+                sh "sudo systemctl status myaspnetapp --no-pager"
             }
         }
     }
