@@ -1,7 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/hello", () => "Hello from ASP.NET Core 8 -  Update Commit!");
+app.MapGet("/hello", () => "Hello from ASP.NET Core 8 -  Update Commit - Update 1!");
 
 app.Run();
 
