@@ -38,21 +38,20 @@ pipeline{
             }
         }
 
-        stage("Build")
-        {
-            steps
-            {
-                echo "Building solution"
-                sh "dotnet build ${WEB_PROJECT} --configuration ${CONFIGURATION} --no-restore"
-            }
-        }
-
-        stage("Test")
-        {
-            steps
-            {
-                echo "Running unit test..."
-                sh "dotnet test ${TEST_PROJECT} --no-build --verbosity normal"
+        stages {
+            stage("Build & Test") {
+                parallel {
+                    stage("Build") {
+                        steps {
+                            sh "dotnet build ${WEB_PROJECT} --configuration ${CONFIGURATION} --no-restore"
+                        }
+                    }
+                    stage("Test") {
+                        steps {
+                            sh "dotnet test ${TEST_PROJECT} --no-build"
+                        }
+                    }
+                }
             }
         }
 
@@ -65,16 +64,26 @@ pipeline{
             }
         }
 
-        stage("Deploy")
-        {
-            steps
-            {
-                sh "mkdir -p ${DEPLOY_DIR}"
-                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
-                sh "chown -R www-data:www-data ${DEPLOY_DIR}"
+        // Ini perlu akses root
+        // stage("Deploy")
+        // {
+        //     steps
+        //     {
+        //         sh "mkdir -p ${DEPLOY_DIR}"
+        //         sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
+        //         sh "chown -R www-data:www-data ${DEPLOY_DIR}"
 
-                sh "sudo systemctl restart myaspnetapp"
-                sh "sudo systemctl status myaspnetapp --no-pager"
+        //         sh "sudo systemctl restart myaspnetapp"
+        //         sh "sudo systemctl status myaspnetapp --no-pager"
+        //     }
+        // }
+        stage("Deploy") {
+            steps {
+                echo "Cleaning up old deployment files..."
+                sh "rm -rf ${DEPLOY_DIR}/*"
+
+                echo "Copying published files to deployment directory..."
+                sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
             }
         }
     }
