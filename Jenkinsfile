@@ -38,20 +38,21 @@ pipeline{
             }
         }
 
-        stages {
-            stage("Build & Test") {
-                parallel {
-                    stage("Build") {
-                        steps {
-                            sh "dotnet build ${WEB_PROJECT} --configuration ${CONFIGURATION} --no-restore"
-                        }
-                    }
-                    stage("Test") {
-                        steps {
-                            sh "dotnet test ${TEST_PROJECT} --no-build"
-                        }
-                    }
-                }
+        stage("Build")
+        {
+            steps
+            {
+                echo "Building solution"
+                sh "dotnet build ${WEB_PROJECT} --configuration ${CONFIGURATION} --no-restore"
+            }
+        }
+
+        stage("Test")
+        {
+            steps
+            {
+                echo "Running unit test..."
+                sh "dotnet test ${TEST_PROJECT} --no-build --verbosity normal"
             }
         }
 
@@ -77,8 +78,10 @@ pipeline{
         //         sh "sudo systemctl status myaspnetapp --no-pager"
         //     }
         // }
-        stage("Deploy") {
-            steps {
+        stage("Deploy") 
+        {
+            steps 
+            {
                 echo "Cleaning up old deployment files..."
                 sh "rm -rf ${DEPLOY_DIR}/*"
 
