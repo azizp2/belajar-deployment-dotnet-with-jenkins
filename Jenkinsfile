@@ -84,6 +84,11 @@ pipeline{
 
                 echo "Copying published files to deployment directory..."
                 sh "cp -r ${PUBLISH_DIR}/* ${DEPLOY_DIR}/"
+
+                // Restart services
+                echo "restart services..."
+                sh "sudo systemctl restart myaspnetapp"
+                sh "sudo systemctl status myaspnetapp --no-pager"
             }
         }
     }
